@@ -6,6 +6,5 @@ post '/event' do
   EventWorker.perform_async(params[:event])
 end
 
-get '/sidekiq' do
-  run Sidekiq::Web
+get '/events' do
 end
