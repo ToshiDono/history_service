@@ -1,6 +1,5 @@
 require 'sinatra'
-require 'sidekiq/web'
-require_relative 'workers/event_worker'
+require_relative '../config/application'
 
 post '/event' do
   EventWorker.perform_async(params[:event])

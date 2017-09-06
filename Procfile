@@ -1,2 +1,3 @@
 web: ruby app/app.rb
-monitoring: rackup config.ru
+monitoring: bundle exec rackup config.ru
+sidekiq: bundle exec sidekiq -r ./config/application.rb
