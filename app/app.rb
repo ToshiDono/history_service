@@ -6,4 +6,6 @@ post '/event' do
 end
 
 get '/events' do
+  pa = DB.from(:performed_actions)
+  "#{pa.all}"
 end
