@@ -3,6 +3,8 @@
 <% end %>
 
 <br><br><br>
+
 <p>
-  <%= @pa.next_page %>
+  <a href="/events?page=<%= @pa.prev_page %>">предыдущая страница</a>
+  <a href="/events?page=<%= @pa.next_page %>">следующая страница</a>
 </p>
