@@ -1,11 +1,14 @@
 require 'sinatra'
 require_relative '../config/application'
+require 'sequel/extensions/pagination'
 
 post '/event' do
   EventWorker.perform_async(params)
 end
 
 get '/events' do
-  pa = DB.from(:performed_actions)
-  "#{pa.all}"
+  page = params.fetch "page", 1
+  per_page = 10
+  @pa = DB.from(:performed_actions).extension(:pagination).paginate(page: page.to_i, per_page: per_page.to_i)
+  erb :events
 end
