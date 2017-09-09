@@ -4,14 +4,24 @@
 
 <br><br><br>
 <p>
-  <%= @pa.count %>
+  записей на странцие:<%= @pa.count %>
+</p>
+<p>
+  записи: <%= @pa.current_page_record_range %>
 </p>
 
 <p>
   <% unless @pa.first_page? %>
-    <a href="/events?page=<%= @pa.prev_page %>">предыдущая страница</a>
+      <a href="/events">в начало</a>
+      <% unless @pa.current_page-1 == 1 %>
+          <a href="/events?page=<%= @pa.prev_page %>"> < </a>
+      <% end %>
   <% end %>
-  <% unless @pa.last_page? %>
-      <a href="/events?page=<%= @pa.next_page %>">следующая страница</a>
+  <%= @pa.current_page %>
+  <% unless @pa.last_page? || @pa.page_count-1 == @pa.current_page %>
+      <a href="/events?page=<%= @pa.next_page %>"> > </a>
+  <% end %>
+  <% unless @pa.next_page.nil? %>
+      <a href="/events?page=<%= @pa.page_count %>">последняя страница</a>
   <% end %>
 </p>
