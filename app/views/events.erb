@@ -1,24 +1,57 @@
-<p>
-  Записей на странцие: <%= @pa.count %>; записи: <%= @pa.current_page_record_range %>
-</p>
-
-<% @pa.each do |row| %>
-    <p><%= row %></p>
-<% end %>
+<div class="panel panel-default">
+  <div class="panel-heading">Лог системы</div>
+  <div class="panel-body">
+    <p>
+      Записей на странцие: <%= @performed_actions.count %>; записи: <%= @performed_actions.current_page_record_range %>
+    </p>
+  </div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th scope="row">id пользователя</th>
+      <th>Роль</th>
+      <th>Дейстие</th>
+      <th>Сущность</th>
+      <th>Дата и время</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @performed_actions.each do |action| %>
+        <tr>
+          <td>
+            <%= action[:actor_id] %>
+          </td>
+          <td>
+            <%= action[:actor_type] %>
+          </td>
+          <td>
+            <%= action[:action] %>
+          </td>
+          <td>
+            <%= action[:subject_type] %>
+          </td>
+          <td>
+            <%= action[:created_at] %>
+          </td>
+        </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 
 <nav aria-label="Page navigation">
   <ul class="pager">
 
-    <% unless @pa.first_page? %>
+    <% unless @performed_actions.first_page? %>
         <li>
           <a href="/events">
           <span aria-hidden="true">&laquo;</span>
           </a>
         </li>
 
-        <% unless @pa.current_page-1 == 1 %>
+        <% unless @performed_actions.current_page-1 == 1 %>
             <li>
-              <a href="/events?page=<%= @pa.prev_page %>" aria-label="Previous">
+              <a href="/events?page=<%= @performed_actions.prev_page %>" aria-label="Previous">
                 <span aria-hidden="true">&larr;</span>
               </a>
             </li>
@@ -26,19 +59,19 @@
 
     <% end %>
 
-    <li><a href="#"><%= @pa.current_page %></a></li>
+    <li><a href="#"><%= @performed_actions.current_page %></a></li>
 
-    <% unless @pa.last_page? || @pa.page_count-1 == @pa.current_page %>
+    <% unless @performed_actions.last_page? || @performed_actions.page_count-1 == @performed_actions.current_page %>
         <li>
-          <a href="/events?page=<%= @pa.next_page %>" aria-label="Next">
+          <a href="/events?page=<%= @performed_actions.next_page %>" aria-label="Next">
             <span aria-hidden="true">&rarr;</span>
           </a>
         </li>
     <% end %>
 
-    <% unless @pa.next_page.nil? %>
+    <% unless @performed_actions.next_page.nil? %>
         <li>
-          <a href="/events?page=<%= @pa.page_count %>">
+          <a href="/events?page=<%= @performed_actions.page_count %>">
             <span aria-hidden="true">&raquo;</span>
           </a>
         </li>
