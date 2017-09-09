@@ -1,3 +1,5 @@
+require_relative '../../config/redis'
+
 class EventWorker
   include Sidekiq::Worker
 
@@ -12,5 +14,10 @@ class EventWorker
         created_at: Time.now,
         updated_at: Time.now
     )
+    incr_event
+  end
+
+  def incr_event
+    REDIS.incr('event')
   end
 end
