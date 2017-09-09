@@ -1,27 +1,47 @@
+<p>
+  Записей на странцие: <%= @pa.count %>; записи: <%= @pa.current_page_record_range %>
+</p>
+
 <% @pa.each do |row| %>
     <p><%= row %></p>
 <% end %>
 
-<br><br><br>
-<p>
-  записей на странцие:<%= @pa.count %>
-</p>
-<p>
-  записи: <%= @pa.current_page_record_range %>
-</p>
+<nav aria-label="Page navigation">
+  <ul class="pager">
 
-<p>
-  <% unless @pa.first_page? %>
-      <a href="/events">в начало</a>
-      <% unless @pa.current_page-1 == 1 %>
-          <a href="/events?page=<%= @pa.prev_page %>"> < </a>
-      <% end %>
-  <% end %>
-  <%= @pa.current_page %>
-  <% unless @pa.last_page? || @pa.page_count-1 == @pa.current_page %>
-      <a href="/events?page=<%= @pa.next_page %>"> > </a>
-  <% end %>
-  <% unless @pa.next_page.nil? %>
-      <a href="/events?page=<%= @pa.page_count %>">последняя страница</a>
-  <% end %>
-</p>
+    <% unless @pa.first_page? %>
+        <li>
+          <a href="/events">
+          <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+
+        <% unless @pa.current_page-1 == 1 %>
+            <li>
+              <a href="/events?page=<%= @pa.prev_page %>" aria-label="Previous">
+                <span aria-hidden="true">&larr;</span>
+              </a>
+            </li>
+        <% end %>
+
+    <% end %>
+
+    <li><a href="#"><%= @pa.current_page %></a></li>
+
+    <% unless @pa.last_page? || @pa.page_count-1 == @pa.current_page %>
+        <li>
+          <a href="/events?page=<%= @pa.next_page %>" aria-label="Next">
+            <span aria-hidden="true">&rarr;</span>
+          </a>
+        </li>
+    <% end %>
+
+    <% unless @pa.next_page.nil? %>
+        <li>
+          <a href="/events?page=<%= @pa.page_count %>">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+    <% end %>
+  </ul>
+</nav>
