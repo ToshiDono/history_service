@@ -10,6 +10,6 @@ class EventWorker
   end
 
   def incr_event
-    REDIS.incr('event')
+    HistoryRedis.connection.incr('event')
   end
 end
