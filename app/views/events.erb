@@ -39,42 +39,4 @@
   </table>
 </div>
 
-<nav aria-label="Page navigation">
-  <ul class="pager">
-
-    <% unless @performed_actions.first_page? %>
-        <li>
-          <a href="/events">
-          <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-
-        <% unless @performed_actions.current_page-1 == 1 %>
-            <li>
-              <a href="/events?page=<%= @performed_actions.prev_page %>" aria-label="Previous">
-                <span aria-hidden="true">&larr;</span>
-              </a>
-            </li>
-        <% end %>
-
-    <% end %>
-
-    <li><a href="#"><%= @performed_actions.current_page %></a></li>
-
-    <% unless @performed_actions.last_page? || @performed_actions.page_count-1 == @performed_actions.current_page %>
-        <li>
-          <a href="/events?page=<%= @performed_actions.next_page %>" aria-label="Next">
-            <span aria-hidden="true">&rarr;</span>
-          </a>
-        </li>
-    <% end %>
-
-    <% unless @performed_actions.next_page.nil? %>
-        <li>
-          <a href="/events?page=<%= @performed_actions.page_count %>">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-    <% end %>
-  </ul>
-</nav>
+<%= erb(:pagination) %>
