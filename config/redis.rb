@@ -1,18 +1,10 @@
 require 'redis'
 require 'singleton'
 
-# module HistoryRedis
-#   @connect = Redis.new(host: ENV['DB_HOST'], port: ENV['DB_REDIS_PORT'], db: 1,timeout: 1)
-#
-#   def self.connection
-#     @connect
-#   end
-# end
-
 class HistoryRedis
   include Singleton
 
   def connection
-    Redis.new(host: ENV['DB_HOST'], port: ENV['DB_REDIS_PORT'], db: 1,timeout: 1)
+    @connect ||= Redis.new(host: ENV['DB_HOST'], port: ENV['DB_REDIS_PORT'], db: 1,timeout: 1)
   end
 end
