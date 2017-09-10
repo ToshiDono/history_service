@@ -8,11 +8,11 @@ end
 
 get '/events' do
   per_page = 100
-  @performed_actions = DB.from(:performed_actions).extension(:pagination).paginate(page.to_i, per_page)
+  @performed_actions = DB.from(:performed_actions).extension(:pagination).paginate(page, per_page)
   erb :events
 end
 
 
 def page
-  params.fetch "page", 1
+  (params.fetch "page", 1).to_i
 end

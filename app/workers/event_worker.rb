@@ -6,10 +6,10 @@ class EventWorker
   def perform(event)
     performed_actions = DB.from(:performed_actions)
     performed_actions.insert(event.merge(created_at: Time.now, updated_at: Time.now))
-    incr_event
+    increment_event
   end
 
-  def incr_event
+  def increment_event
     HistoryRedis.connection.incr('event')
   end
 end
