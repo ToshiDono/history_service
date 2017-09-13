@@ -16,25 +16,6 @@ class Cache
       add_events_hash_to_list performed_action[:id]
     end
 
-    # create event hash
-    def create_events_hash(performed_action)# протестировано
-      redis_connect do |con|
-        con.hmset("cache:events:#{performed_action[:id]}",
-                  'actor_id', performed_action[:actor_id],
-                  'actor_type', performed_action[:actor_type],
-                  'action', performed_action[:action],
-                  'subject_id', performed_action[:subject_id],
-                  'subject_type', performed_action[:subject_type],
-                  'created_at', performed_action[:created_at]
-        )
-      end
-    end
-
-    # add id hash to events list
-    def add_events_hash_to_list(id)# протестировано
-      redis_connect { |con| con.rpush('cache:events:list', id) }
-    end
-
     # return [{event}]
     def events# протестировано
       @performed_actions = []
@@ -63,6 +44,27 @@ class Cache
       destroy_events_list
     end
 
+    private
+
+    # create event hash
+    def create_events_hash(performed_action)# протестировано
+      redis_connect do |con|
+        con.hmset("cache:events:#{performed_action[:id]}",
+                  'actor_id', performed_action[:actor_id],
+                  'actor_type', performed_action[:actor_type],
+                  'action', performed_action[:action],
+                  'subject_id', performed_action[:subject_id],
+                  'subject_type', performed_action[:subject_type],
+                  'created_at', performed_action[:created_at]
+        )
+      end
+    end
+
+    # add id hash to events list
+    def add_events_hash_to_list(id)# протестировано
+      redis_connect { |con| con.rpush('cache:events:list', id) }
+    end
+
     # deletes the list of events
     def destroy_events_list# протестировано
       redis_connect { |con| con.del('cache:events:list') }
@@ -72,8 +74,6 @@ class Cache
     def destroy_event(id)# протестировано
       redis_connect { |con| con.del("cache:events:#{id}") }
     end
-
-    private
 
     # return Redis.connect
     def redis_connect(*args, &b)# протестировано
