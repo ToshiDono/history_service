@@ -1,5 +1,7 @@
 # require_relative '../../config/application'
 # require 'sequel/extensions/pagination'
+require_relative '../../config/env'
+require_relative '../../config/db'
 require_relative 'base'
 
 class Cache
