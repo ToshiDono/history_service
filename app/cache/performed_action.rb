@@ -5,21 +5,21 @@ require_relative 'base'
 class Cache
   class PerformedAction < Cache::Base
 
-    # create hash and add  add id hash to events list
+    # create hash and add id hash to events set
     def create_event(performed_action)
       create_events_hash(performed_action)
-      add_hash_to_list(performed_action[:id])
+      add_hash_to_set(performed_action[:id])
     end
 
-    def list_name
-      'cache:events:list'
-    end
+    private
 
     def hash_name(id)
       "cache:events:#{id}"
     end
 
-    private
+    def set_name
+      'cache:events:set'
+    end
 
     # create event hash
     def create_events_hash(performed_action)
