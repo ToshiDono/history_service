@@ -1,13 +1,13 @@
 # require_relative '../../config/application'
 # require 'sequel/extensions/pagination'
-require_relative '../../config/redis'
+require_relative 'base'
 
 class Cache
-  class PerformedAction
+  class PerformedAction < Cache::Base
 
     # checks the presence of a cache by the presence of a list with keys
-    def events_list_exists?# протестировано
-      redis_connect { |con| con.llen('cache:events:list') != 0 }
+    def list_exists?
+      super('cache:events:list')
     end
 
     # create hash and add  add id hash to events list
@@ -17,7 +17,7 @@ class Cache
     end
 
     # return [{event}]
-    def events# протестировано
+    def events
       @performed_actions = []
       redis_connect do |con|
         events_ids.each do  |event|
@@ -28,7 +28,7 @@ class Cache
     end
 
     # return [events list]
-    def events_ids # протестировано
+    def events_ids
       redis_connect do |con|
         events_size = con.llen('cache:events:list')
         events_list = con.lrange('cache:events:list', 0, events_size)
@@ -37,7 +37,7 @@ class Cache
     end
 
     # removes hashes and event list
-    def destroy_events_cache# протестировано
+    def destroy_events_cache
       events_ids.each do |event_id|
         destroy_event(event_id)
       end
@@ -47,39 +47,33 @@ class Cache
     private
 
     # create event hash
-    def create_events_hash(performed_action)# протестировано
-      redis_connect do |con|
-        con.hmset("cache:events:#{performed_action[:id]}",
-                  'actor_id', performed_action[:actor_id],
-                  'actor_type', performed_action[:actor_type],
-                  'action', performed_action[:action],
-                  'subject_id', performed_action[:subject_id],
-                  'subject_type', performed_action[:subject_type],
-                  'created_at', performed_action[:created_at]
-        )
-      end
+    def create_events_hash(performed_action)
+      keys= ['actor_id', 'actor_type', 'action', 'subject_id', 'subject_type', 'created_at']
+      create_hash(performed_action, keys)
     end
 
     # add id hash to events list
-    def add_events_hash_to_list(id)# протестировано
-      redis_connect { |con| con.rpush('cache:events:list', id) }
+    def add_hash_to_list(id)
+      super('cache:events:list', id)
     end
 
     # deletes the list of events
-    def destroy_events_list# протестировано
+    def destroy_events_list
       redis_connect { |con| con.del('cache:events:list') }
     end
 
     # deletes the hash of events
-    def destroy_event(id)# протестировано
+    def destroy_event(id)
       redis_connect { |con| con.del("cache:events:#{id}") }
     end
 
-    # return Redis.connect
-    def redis_connect(*args, &b)# протестировано
-      con = HistoryRedis.instance.connection
-      # Sidekiq.redis { |con| yield(con, *args) }
-      yield(con, *args)
-    end
+    # # return Redis.connect
+    # def redis_connect(*args, &b)
+    #   con = HistoryRedis.instance.connection
+    #   # Sidekiq.redis { |con| yield(con, *args) }
+    #   yield(con, *args)
+    # end
   end
 end
+
+
