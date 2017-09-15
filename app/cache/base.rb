@@ -1,4 +1,4 @@
-require_relative '../../config/redis'
+require_relative '../../config/application'
 
 class Cache
   class Base
@@ -57,9 +57,7 @@ class Cache
 
     # return Redis.connect
     def redis_connect(*args, &b)
-      con = HistoryRedis.instance.connection
-      # Sidekiq.redis { |con| yield(con, *args) }
-      yield(con, *args)
+      Sidekiq.redis { |con| yield(con, *args) }
     end
 
   end

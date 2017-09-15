@@ -1,13 +1,10 @@
-# require_relative '../../config/application'
-# require 'sequel/extensions/pagination'
-require_relative '../../config/env'
-require_relative '../../config/db'
 require_relative 'base'
+require 'sequel/extensions/pagination'
 
 class Cache
   class PerformedAction < Cache::Base
 
-    # create hash and add id hash to events set
+    # create hash and add hashes id to events set
     def create_event(performed_action)
       create_events_hash(performed_action)
       add_hash_to_set(performed_action[:id])
