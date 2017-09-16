@@ -14,15 +14,12 @@ end
 
 # return[Dto::PerformedAction]
 def events
-  collection = if page == 1
+  collection = if page == 1 or nil
                  cached_events || events_from_db
                else
                  events_from_db
                end
-  puts_debug(collection)
-  collection = to_dto(collection)
-  puts_debug(collection)
-  collection
+  to_dto(collection)
 end
 
 def page
