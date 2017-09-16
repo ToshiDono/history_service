@@ -11,18 +11,18 @@ post '/event' do
 end
 
 get '/events' do
-  @performed_actions = events
+  @collection = events
+  @performed_actions = to_dto(@collection)
   erb :events
 end
 
 # return[Dto::PerformedAction]
 def events
-  collection = if params_page == 1 or nil
-                 cached_events || events_from_db
-               else
-                 events_from_db
-               end
-  to_dto(collection)
+  if params_page == 1 or nil
+    cached_events || events_from_db
+  else
+    events_from_db
+  end
 end
 
 def params_page
@@ -30,13 +30,13 @@ def params_page
 end
 
 def cached_events
-  cache = Cache::PerformedAction.new
-  cache.hashes
+  collection = Cache::PerformedAction.new
+  Kaminari.paginate_array(collection.hashes).page(params_page).per(100)
 end
 
 def events_from_db
   per_page = 100
-  Kaminari.paginate_array(DB.from(:performed_actions).to_a).page(params_page).per(per_page)
+  DB.from(:performed_actions).extension(:pagination).paginate(page, per_page)
 end
 
 def to_dto(collection)
