@@ -2,8 +2,12 @@
   <div class="panel-heading">Лог системы</div>
   <div class="panel-body">
     <p>
+      <%= paginate @performed_actions %>
+    </p>
+    <p>
       Записей на странцие: <%= @performed_actions.size %>; записи: < %= @performed_actions.current_page_record_range %>
     </p>
+
   </div>
   <table class="table">
     <thead>

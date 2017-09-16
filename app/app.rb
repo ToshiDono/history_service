@@ -1,8 +1,10 @@
 require 'sinatra'
 require 'kaminari'
+require 'kaminari/sinatra'
 require_relative '../config/application'
 require_relative 'dto/performed_action'
-require 'sequel/extensions/pagination'
+
+register Kaminari::Helpers::SinatraHelpers
 
 post '/event' do
   EventWorker.perform_async(params)
