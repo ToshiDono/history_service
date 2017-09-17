@@ -10,6 +10,7 @@ gem 'redis'
 gem 'sequel', '~> 5.0'
 gem 'sidekiq', '~> 5.0', '>= 5.0.4'
 gem 'sinatra', '~> 2.0'
+gem 'will_paginate', '~> 3.1', '>= 3.1.6'
 
 group :development, :test do
   gem 'shotgun', '~> 0.9.2'
