@@ -1,10 +1,11 @@
 require 'sinatra'
 require 'kaminari'
-require 'kaminari/sinatra'
+require 'will_paginate'
+require 'will_paginate/array'
 require_relative '../config/application'
 require_relative 'dto/performed_action'
 
-register Kaminari::Helpers::SinatraHelpers
+register WillPaginate::Sinatra
 
 post '/event' do
   EventWorker.perform_async(params)
@@ -29,14 +30,19 @@ def params_page
   (params.fetch "page", 1).to_i
 end
 
+def per_page
+  100
+end
+
 def cached_events
   collection = Cache::PerformedAction.new
-  Kaminari.paginate_array(collection.hashes).page(params_page).per(100)
+  collection.hashes.to_a.paginate(page: params_page, per_page: per_page)
+  # Kaminari.paginate_array(collection.hashes).page(params_page).per(100)
 end
 
 def events_from_db
-  per_page = 100
-  DB.from(:performed_actions).extension(:pagination).paginate(page, per_page)
+  # DB.from(:performed_actions).extension(:pagination).paginate(params_page, per_page)
+  DB.from(:performed_actions).to_a.paginate(page: params_page, per_page: per_page)
 end
 
 def to_dto(collection)
