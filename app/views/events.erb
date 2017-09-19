@@ -2,7 +2,10 @@
   <div class="panel-heading">Лог системы</div>
   <div class="panel-body">
     <p>
-      Записей на странцие: <%= @performed_actions.count %>; записи: <%= @performed_actions.current_page_record_range %>
+      Записей на странцие: <%= @performed_actions.size %>; записи: < %= @performed_actions.current_page_record_range %>
+    </p>
+    <p>
+      <%= will_paginate @collection %>
     </p>
   </div>
   <table class="table">
@@ -19,19 +22,19 @@
     <% @performed_actions.each do |action| %>
         <tr>
           <td>
-            <%= action[:actor_id] %>
+            <%= action.actor_id %>
           </td>
           <td>
-            <%= action[:actor_type] %>
+            <%= action.actor_type %>
           </td>
           <td>
-            <%= action[:action] %>
+            <%= action.action %>
           </td>
           <td>
-            <%= action[:subject_type] %>
+            <%= action.subject_type %>
           </td>
           <td>
-            <%= action[:created_at] %>
+            <%= action.created_at %>
           </td>
         </tr>
     <% end %>
@@ -39,4 +42,3 @@
   </table>
 </div>
 
-<%= erb(:pagination) %>
