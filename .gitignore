@@ -1,2 +1,4 @@
 .idea
 init.rb
+.envrc
+config/env.rb
