@@ -7,6 +7,9 @@ require_relative 'dto/performed_action'
 
 register WillPaginate::Sinatra
 
+set :bind, '0.0.0.0'
+set :port, 5000
+
 post '/event' do
   EventWorker.perform_async(params)
 end
