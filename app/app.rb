@@ -52,19 +52,3 @@ def to_dto(collection)
   end
   dto_events
 end
-
-
-def puts_debug(elem)
-  puts "DEBUG"
-  puts "DEBUG"
-  puts elem.class
-  puts "DEBUG"
-  puts "DEBUG"
-  puts elem.size
-  puts "DEBUG"
-  puts "DEBUG"
-  puts params.inspect
-  puts "DEBUG"
-  puts "DEBUG"
-end
-
