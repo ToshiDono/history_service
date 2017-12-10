@@ -54,13 +54,13 @@ ENVPGDATA
 17. `cd history_service/`
 18.  Run app: `foreman start`
 19. Create illness request:
-19.1. Open browser and go to [http://0.0.0.0:3000/](http://0.0.0.0:3000/) 
-19.2. Register or log in(`patient.1.@patient.com` / `123123`) to app
-19.3. Create illness request
+   19.1. Open browser and go to [http://0.0.0.0:3000/](http://0.0.0.0:3000/) 
+   19.2. Register or log in(`patient.1.@patient.com` / `123123`) to app
+   19.3. Create illness request
 
 or
 
-19.1. Send query
+   19.1. Send query
 
 `curl -X POST \
    http://0.0.0.0:5000/event \
