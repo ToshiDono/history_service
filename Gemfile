@@ -1,7 +1,6 @@
 source 'https://rubygems.org'
 
 ruby '~> 2.4.0'
-gem 'dotenv', '~> 2.2', '>= 2.2.1'
 gem 'foreman', '~> 0.84.0'
 gem 'kaminari'
 gem 'kaminari-sinatra', '~> 1.0', '>= 1.0.1'

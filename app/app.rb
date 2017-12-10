@@ -7,6 +7,9 @@ require_relative 'dto/performed_action'
 
 register WillPaginate::Sinatra
 
+set :bind, '0.0.0.0'
+set :port, 5000
+
 post '/event' do
   EventWorker.perform_async(params)
 end
@@ -52,19 +55,3 @@ def to_dto(collection)
   end
   dto_events
 end
-
-
-def puts_debug(elem)
-  puts "DEBUG"
-  puts "DEBUG"
-  puts elem.class
-  puts "DEBUG"
-  puts "DEBUG"
-  puts elem.size
-  puts "DEBUG"
-  puts "DEBUG"
-  puts params.inspect
-  puts "DEBUG"
-  puts "DEBUG"
-end
-
