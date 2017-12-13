@@ -3,3 +3,5 @@ init.rb
 .envrc
 config/env.rb
 my_debug_logs.log
+spec/examples.txt
+coverage
